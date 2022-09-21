@@ -15,17 +15,16 @@ public class sensorSismológico {
         int entrada = ingresar();
         double[][] sismos = crearMatriz(entrada);
         generarSismo(sismos);
-        System.out.println(Arrays.deepToString(sismos));
+        //System.out.println(Arrays.deepToString(sismos));
         sismoMasIntenso(sismos);
         sismosMayoresIgualesA55(sismos);
-        //alerta(sismos);
-        //hayEnjambreSismico(sismos);
-
+        alertaEscaladaSismica(sismos);
 
     }
 
     private static int ingresar() {
-        System.out.println("ingrese un valor");
+        System.out.println("cantidad de dias a medir");
+        System.out.println("para salir ingrese -0");
         Scanner teclado = new Scanner(System.in);
         int entrada;
 
@@ -64,18 +63,29 @@ public class sensorSismológico {
 
             }
         }
+        imprimirSismos(sismos);
+    }
+    private static void imprimirSismos(double[][] sismos){
+
+        for (int i = 0; i < sismos.length; i++) {
+            System.out.println(Arrays.toString(sismos[i]));
+        }
 
     }
     private static void sismoMasIntenso(double[][] sismos) {
         double mayorSismo = sismos[0][0];
+        int dia = 0;
+        int hora = 0;
         for (int i = 0; i < sismos.length; i++) {
             for (int j = 0; j < sismos[i].length; j++) {
                 if (sismos[i][j] > mayorSismo) {
                     mayorSismo = sismos[i][j];
+                    dia = (i + 1);
+                    hora = j;
                 }
             }
         }
-        System.out.println("el sismo de mayor intensidad es "+ mayorSismo);
+        System.out.println("sismo de mayor intensidad:  "+ mayorSismo + " en el dia "+ dia +" a las "+ hora + " horas");
     }
     private static void sismosMayoresIgualesA55(double[][] sismos){
         int contador = 0;
@@ -89,7 +99,29 @@ public class sensorSismológico {
         System.out.println("Sismos mayores a 5.5 = " + contador);
 
     }
-    private static void alerta(double[][] sismos){
+    private static void alertaEscaladaSismica(double[][] sismos){
+
+        double valor = 6;
+        int contador = 0;
+        int dias = 0;
+
+        for (int i = 0; i < sismos.length; i++){
+            for (int j = 0;  j < sismos[i].length; j++){
+                if(valor <= sismos[i][j]){
+
+                    contador ++;
+
+                }
+                if(contador >= 4){
+
+                    dias ++;
+                    System.out.println("enjambre sismologico ");
+                    break;
+
+                }
+            }
+        }
+        System.out.println("numero de dias enjambre " +dias);
 
     }
     private static void hayEnjambreSismico(double[][] sismos){
