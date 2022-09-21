@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,8 +13,13 @@ public class sensorSismológico {
 
 
         int entrada = ingresar();
-        double[][] sismo = crearMatriz(entrada);
-        generarSismo(sismo);
+        double[][] sismos = crearMatriz(entrada);
+        generarSismo(sismos);
+        System.out.println(Arrays.deepToString(sismos));
+        sismoMasIntenso(sismos);
+        sismosMayoresIgualesA55(sismos);
+        //alerta(sismos);
+        //hayEnjambreSismico(sismos);
 
 
     }
@@ -51,7 +55,7 @@ public class sensorSismológico {
     }
     private static void generarSismo(double[][] sismos){
 
-        for (int i=0 ; i  < sismos.length ; i++){
+        for (int i = 0 ; i  < sismos.length ; i++){
             for (int j = 0; j < (sismos[i].length); j++){
                 Random random = new Random();
                 double sismo = 0.5 + (9.5 - 0.5) * random.nextDouble();
@@ -60,13 +64,38 @@ public class sensorSismológico {
 
             }
         }
-        System.out.println(Arrays.deepToString(sismos));
-        /*for (int i = 0; i < sismos.length; i ++){
-            for (int j = 0; j < sismos[i].length; j++){
-                System.out.println(sismos[i][j]);
-            }
-        }*/
 
     }
+    private static void sismoMasIntenso(double[][] sismos) {
+        double mayorSismo = sismos[0][0];
+        for (int i = 0; i < sismos.length; i++) {
+            for (int j = 0; j < sismos[i].length; j++) {
+                if (sismos[i][j] > mayorSismo) {
+                    mayorSismo = sismos[i][j];
+                }
+            }
+        }
+        System.out.println("el sismo de mayor intensidad es "+ mayorSismo);
+    }
+    private static void sismosMayoresIgualesA55(double[][] sismos){
+        int contador = 0;
+        for (int  i = 0; i < sismos.length; i++){
+            for (int j = 0; j < sismos[i].length; j++){
+                if (sismos[i][j] >= 5.5){
+                    contador ++;
+                }
+            }
+        }
+        System.out.println("Sismos mayores a 5.5 = " + contador);
+
+    }
+    private static void alerta(double[][] sismos){
+
+    }
+    private static void hayEnjambreSismico(double[][] sismos){
+
+
+    }
+
 
 }
