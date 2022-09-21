@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class sensorSismológico {
@@ -10,11 +11,13 @@ public class sensorSismológico {
     private static void inicia(){
 
         int entrada = ingresar();
-        crearMatriz(entrada);
+        double[][] sismo = crearMatriz(entrada);
+        generarSismo(sismo);
 
 
     }
     private static int ingresar() {
+        System.out.println("ingrese un valor");
         Scanner teclado = new Scanner(System.in);
         int entrada;
 
@@ -37,13 +40,21 @@ public class sensorSismológico {
 
     }
 
-    private static String[][] crearMatriz(int entrada){
+    private static double[][] crearMatriz(int entrada){
 
-        String[][] sismos = new String[entrada][23];
+        double[][] sismos = new double[entrada][23];
                 return sismos;
     }
-    private static String[][] generarSismo(String[][] sismos){
+    private static void generarSismo(double[][] sismos){
 
-        return sismos;
+        for (int i=0 ; i  < sismos.length; i++){
+            for (int j = 0; j < sismos[i].length; j++){
+                Random random = new Random();
+                double sismo = 0.5 + (9.5 - 0.5) * random.nextDouble();
+
+            }
+        }
+
     }
+
 }
